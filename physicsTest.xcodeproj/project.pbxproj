@@ -1,0 +1,258 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD1C1DF21D54F7DD001E2E93 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD1C1DF11D54F7DD001E2E93 /* main.cpp */; };
+		DD1C1DF91D54F80A001E2E93 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */; };
+		DD1C1DFB1D54F80E001E2E93 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */; };
+		DD1C1DFD1D54F814001E2E93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DD1C1DEC1D54F7DD001E2E93 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DD1C1DEE1D54F7DD001E2E93 /* physicsTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = physicsTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD1C1DF11D54F7DD001E2E93 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DD1C1DFE1D54FAC7001E2E93 /* Vec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vec.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD1C1DEB1D54F7DD001E2E93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD1C1DFD1D54F814001E2E93 /* Cocoa.framework in Frameworks */,
+				DD1C1DFB1D54F80E001E2E93 /* GLUT.framework in Frameworks */,
+				DD1C1DF91D54F80A001E2E93 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD1C1DE51D54F7DD001E2E93 = {
+			isa = PBXGroup;
+			children = (
+				DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */,
+				DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */,
+				DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */,
+				DD1C1DF01D54F7DD001E2E93 /* physicsTest */,
+				DD1C1DEF1D54F7DD001E2E93 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DD1C1DEF1D54F7DD001E2E93 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD1C1DEE1D54F7DD001E2E93 /* physicsTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD1C1DF01D54F7DD001E2E93 /* physicsTest */ = {
+			isa = PBXGroup;
+			children = (
+				DD1C1DF11D54F7DD001E2E93 /* main.cpp */,
+				DD1C1DFE1D54FAC7001E2E93 /* Vec.h */,
+			);
+			path = physicsTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD1C1DED1D54F7DD001E2E93 /* physicsTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD1C1DF51D54F7DD001E2E93 /* Build configuration list for PBXNativeTarget "physicsTest" */;
+			buildPhases = (
+				DD1C1DEA1D54F7DD001E2E93 /* Sources */,
+				DD1C1DEB1D54F7DD001E2E93 /* Frameworks */,
+				DD1C1DEC1D54F7DD001E2E93 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = physicsTest;
+			productName = physicsTest;
+			productReference = DD1C1DEE1D54F7DD001E2E93 /* physicsTest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD1C1DE61D54F7DD001E2E93 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Kimmo;
+				TargetAttributes = {
+					DD1C1DED1D54F7DD001E2E93 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = DD1C1DE91D54F7DD001E2E93 /* Build configuration list for PBXProject "physicsTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DD1C1DE51D54F7DD001E2E93;
+			productRefGroup = DD1C1DEF1D54F7DD001E2E93 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD1C1DED1D54F7DD001E2E93 /* physicsTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD1C1DEA1D54F7DD001E2E93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD1C1DF21D54F7DD001E2E93 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DD1C1DF31D54F7DD001E2E93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DD1C1DF41D54F7DD001E2E93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DD1C1DF61D54F7DD001E2E93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DD1C1DF71D54F7DD001E2E93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD1C1DE91D54F7DD001E2E93 /* Build configuration list for PBXProject "physicsTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD1C1DF31D54F7DD001E2E93 /* Debug */,
+				DD1C1DF41D54F7DD001E2E93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD1C1DF51D54F7DD001E2E93 /* Build configuration list for PBXNativeTarget "physicsTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD1C1DF61D54F7DD001E2E93 /* Debug */,
+				DD1C1DF71D54F7DD001E2E93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD1C1DE61D54F7DD001E2E93 /* Project object */;
+}
