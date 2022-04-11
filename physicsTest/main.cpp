@@ -14,100 +14,19 @@
 #include <math.h>
 #include <vector>
 #include <ctime>
+#include "Vec.h"
+#include "Physics.hpp"
 
 using namespace std;
 static int win = 0;
 
-
 #define RADIUS 600
 #define NUM_OBJECTS 200
-#define GRAVITY 1
+#define GRAVITY 0
 #define NUM_SEGMENTS 20
-
-#include "Vec.h"
-
-class Unit
-{
-public:
-    Unit() {};
-    ~Unit() {};
-    Vec m_Pos;
-    Vec m_Velocity;
-    int m_Radius;
-    int m_Mass;
-    int m_OrderNumber;
-};
 
 std::vector<Unit*> units1;
 std::vector<Unit*> units2;
-
-struct Manifold
-{
-    Unit* A;
-    Unit* B;
-    int penetration;
-    Vec normal;
-};
-
-void menuCallback(int);
-void DrawScene(std::vector<Unit*>, float offset, bool pushRed);
-
-bool CreateManifold(Manifold* m)
-{
-    Unit* A = m->A;
-    Unit* B = m->B;
-    Vec normal = B->m_Pos - A->m_Pos;
-    int radius = A->m_Radius + B->m_Radius;
- 
-    if (normal.GetLengthSquared() > radius * radius) return false;
-    
-    int distance = normal.GetLength();
- 
-    if (distance != 0)
-    {
-        m->penetration = (radius - distance);
-        m->normal = normal * Vec::SCALE / distance;
-        return true;
-    }
-    else
-    {
-        m->penetration = A->m_Radius;
-        m->normal = Vec(Vec::SCALE, 0);
-        return true;
-    }
-}
-
-
-void ResolveCollision(Unit* a, Unit* b)
-{
-    Manifold m;
-    
-    m.A = a;
-    m.B = b;
-    
-    // Adapted from https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331
-    
-    if (CreateManifold(&m))
-    {
-        // relative velocity
-        Vec rVelocity = b->m_Velocity - a->m_Velocity;
-        
-        int velAlongNormal = rVelocity.Dot(m.normal) / Vec::SCALE;
-
-        if (velAlongNormal > 0) return; // if bodies are separating, don't resolve
-        
-        int inverseMassSum = (a->m_Mass + b->m_Mass);
-        int j;
-
-        if (inverseMassSum != 0)
-        {
-            j = -Vec::SCALE * velAlongNormal / inverseMassSum + m.penetration;
-            Vec impulse = (m.normal * j / Vec::SCALE);
-            a->m_Velocity -= (impulse * a->m_Mass) / Vec::SCALE;
-            b->m_Velocity += (impulse * b->m_Mass) / Vec::SCALE;
-        }
-    }
-}
 
 
 void DrawCircle(float x, float y, float r)
@@ -120,57 +39,7 @@ void DrawCircle(float x, float y, float r)
     glEnd();
 }
 
-
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-32, 32, -16, 16, -1.0, 1.0);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    static clock_t timer = clock();
-    bool pushRed = false;
-    if (clock() > timer + 1000000)
-    {
-        timer = clock();
-        pushRed = true;
-    }
-
-    DrawScene(units1, -16.0f, pushRed);
-    DrawScene(units2, 16.0f, pushRed);
-    
-    glBegin(GL_LINES);
-    glVertex2f(0.0f, -16.0f);
-    glVertex2f(0.0f, 16.0f);
-    glEnd();
-
-    glutSwapBuffers();
-}
-
-
-void ResolveCollisions(std::vector<Unit*> units)
-{
-    int processedUntil = 0;
-    
-    for (auto unit : units)
-    {
-        for (auto otherUnit : units)
-        {
-            if (unit != otherUnit && otherUnit->m_OrderNumber > processedUntil)
-            {
-                ResolveCollision(unit, otherUnit);
-            }
-        }
-        processedUntil = unit->m_OrderNumber;
-    }
-}
-
-
-void DrawScene(std::vector<Unit*> units, float offset, bool pushRed)
+void ProcessUnits(std::vector<Unit*> units, int pushRed)
 {
     for (auto unit : units)
     {
@@ -205,12 +74,16 @@ void DrawScene(std::vector<Unit*> units, float offset, bool pushRed)
     
     if (pushRed)
     {
-        units[0]->m_Velocity.x += 200;
+        if (pushRed == 1) units[0]->m_Velocity.x += 300;
+        else units[0]->m_Velocity.x -= 300;
         units[0]->m_Velocity.y += 500;
     }
-        
-    ResolveCollisions(units);
 
+    ResolveCollisions(units);
+}
+
+void DrawScene(std::vector<Unit*> units, float offset)
+{
     glColor3f(1.0f, 0.0f, 0.0f);
     
     for (auto u : units)
@@ -222,6 +95,39 @@ void DrawScene(std::vector<Unit*> units, float offset, bool pushRed)
     }
     
     glEnd();
+}
+
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-32, 32, -16, 16, -1.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    static clock_t timer = clock();
+    int pushRed = 0;
+    if (clock() > timer + 1000000)
+    {
+        timer = clock();
+        pushRed = (rand() % 1) + 1;
+    }
+
+    ProcessUnits(units1, pushRed);
+    DrawScene(units1, -16.0f);
+    
+    ProcessUnits(units2, pushRed);
+    DrawScene(units2, 16.0f);
+    
+    glBegin(GL_LINES);
+    glVertex2f(0.0f, -16.0f);
+    glVertex2f(0.0f, 16.0f);
+    glEnd();
+
+    glutSwapBuffers();
 }
 
 void idle()
@@ -248,7 +154,6 @@ void CreateGlutCallbacks()
     glutIdleFunc(idle);
 }
 
-
 void InitOpenGL()
 {
     glDisable(GL_DEPTH_TEST);
@@ -262,13 +167,8 @@ void ExitGlut()
     exit(0);
 }
 
-int main (int argc, char **argv)
+void Precalc()
 {
-    glutInit(&argc, argv); 
-    CreateGlutWindow();
-    CreateGlutCallbacks();
-    InitOpenGL();
-    
     for (int i = 0; i < NUM_OBJECTS; i++)
     {
         Unit* u1 = new Unit();
@@ -295,9 +195,18 @@ int main (int argc, char **argv)
         u2->m_OrderNumber = u1->m_OrderNumber;
         units2.push_back(u2);
     }
+}
+
+int main (int argc, char **argv)
+{
+    glutInit(&argc, argv); 
+    CreateGlutWindow();
+    CreateGlutCallbacks();
+    InitOpenGL();
+    Precalc();
     
     glutMainLoop();
     
     ExitGlut();
-    return 0;		
+    return 0;
 }

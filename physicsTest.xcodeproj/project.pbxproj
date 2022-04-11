@@ -11,6 +11,7 @@
 		DD1C1DF91D54F80A001E2E93 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */; };
 		DD1C1DFB1D54F80E001E2E93 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */; };
 		DD1C1DFD1D54F814001E2E93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */; };
+		F470164A28040CCE00E476A3 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F470164828040CCE00E476A3 /* Physics.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,8 @@
 		DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DD1C1DFE1D54FAC7001E2E93 /* Vec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vec.h; sourceTree = "<group>"; };
+		F470164828040CCE00E476A3 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = physicsTest/Physics.cpp; sourceTree = "<group>"; };
+		F470164928040CCE00E476A3 /* Physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Physics.hpp; path = physicsTest/Physics.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +54,8 @@
 		DD1C1DE51D54F7DD001E2E93 = {
 			isa = PBXGroup;
 			children = (
+				F470164828040CCE00E476A3 /* Physics.cpp */,
+				F470164928040CCE00E476A3 /* Physics.hpp */,
 				DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */,
 				DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */,
 				DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */,
@@ -115,6 +120,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = DD1C1DE51D54F7DD001E2E93;
@@ -133,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD1C1DF21D54F7DD001E2E93 /* main.cpp in Sources */,
+				F470164A28040CCE00E476A3 /* Physics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +258,7 @@
 				DD1C1DF71D54F7DD001E2E93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
