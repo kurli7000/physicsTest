@@ -34,40 +34,40 @@ void Simulation::ProcessUnits(bool pushRed)
 {
     for (auto unit : units)
     {
-        unit->m_Pos += unit->m_Velocity;
+        unit->pos += unit->velocity;
         
-        if (unit->m_Pos.x < unit->m_Radius)
+        if (unit->pos.x < unit->radius)
         {
-            unit->m_Pos.x = unit->m_Radius;
-            unit->m_Velocity.x = -unit->m_Velocity.x;
+            unit->pos.x = unit->radius;
+            unit->velocity.x = -unit->velocity.x;
         }
         
-        if (unit->m_Pos.x > 32 * Vec::SCALE - unit->m_Radius)
+        if (unit->pos.x > 32 * Vec::SCALE - unit->radius)
         {
-            unit->m_Pos.x = 32 * Vec::SCALE - unit->m_Radius;
-            unit->m_Velocity.x = -unit->m_Velocity.x;
+            unit->pos.x = 32 * Vec::SCALE - unit->radius;
+            unit->velocity.x = -unit->velocity.x;
         }
         
-        if (unit->m_Pos.y < unit->m_Radius)
+        if (unit->pos.y < unit->radius)
         {
-            unit->m_Pos.y = unit->m_Radius;
-            unit->m_Velocity.y = -unit->m_Velocity.y;
+            unit->pos.y = unit->radius;
+            unit->velocity.y = -unit->velocity.y;
         }
         
-        if (unit->m_Pos.y > 32 * Vec::SCALE - unit->m_Radius)
+        if (unit->pos.y > 32 * Vec::SCALE - unit->radius)
         {
-            unit->m_Pos.y = 32 * Vec::SCALE - unit->m_Radius;
-            unit->m_Velocity.y = -unit->m_Velocity.y;
+            unit->pos.y = 32 * Vec::SCALE - unit->radius;
+            unit->velocity.y = -unit->velocity.y;
         }
         
-        unit->m_Velocity.y -= GRAVITY;
+        unit->velocity.y -= GRAVITY;
     }
     
     if (pushRed)
     {
-        if (pushRed == 1) units[0]->m_Velocity.x += 300;
-        else units[0]->m_Velocity.x -= 300;
-        units[0]->m_Velocity.y += 500;
+        if (pushRed == 1) units[0]->velocity.x += 300;
+        else units[0]->velocity.x -= 300;
+        units[0]->velocity.y += 500;
     }
 
     Physics::ResolveCollisions(units);

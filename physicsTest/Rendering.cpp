@@ -27,9 +27,9 @@ void Rendering::DrawScene(std::vector<Unit*>* units, float offset)
     
     for (auto u : *units)
     {
-        DrawCircle((float)u->m_Pos.x / (float)Vec::SCALE - 16.0f + offset,
-                   (float)u->m_Pos.y / (float)Vec::SCALE - 16.0f,
-                   (float)u->m_Radius / (float)Vec::SCALE);
+        DrawCircle((float)u->pos.x / (float)Vec::SCALE - 16.0f + offset,
+                   (float)u->pos.y / (float)Vec::SCALE - 16.0f,
+                   (float)u->radius / (float)Vec::SCALE);
         glColor3f(1.0f, 1.0f, 1.0f);
     }
     
