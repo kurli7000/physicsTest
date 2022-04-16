@@ -5,6 +5,8 @@
 #include <math.h>
 #include <vector>
 
+#define GRAVITY 0
+
 class Unit
 {
 public:
