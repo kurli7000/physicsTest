@@ -44,3 +44,26 @@ void Unit::CopyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst)
         dst->push_back(u2);
     }
 }
+
+void Unit::ReplaceData(std::vector<Unit*>* src, std::vector<Unit*>* dst)
+{
+    assert((*src).size() == (*dst).size());
+    
+    for (int i = 0; i < (*src).size(); i++)
+    {
+        Unit* srcunit = (*src)[i];
+        Unit* dstunit = (*dst)[i];
+        dstunit->pos = srcunit->pos;
+        dstunit->velocity = srcunit->velocity;
+        dstunit->mass = srcunit->mass;
+        dstunit->radius = srcunit->radius;
+        dstunit->orderNumber = srcunit->orderNumber;
+        
+        /*
+        Doesn't work ??
+        Unit srcunit = *(*src)[i];
+        Unit dstunit = *(*dst)[i];
+        dstunit = srcunit;
+        */
+    }
+}

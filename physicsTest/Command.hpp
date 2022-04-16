@@ -10,7 +10,7 @@ class Command
 public:
     Command(Unit* unit, int tick, Vec velocityIncrease);
     void Execute();
-    int GetTick() { return tick; }
+    int getTick() { return tick; }
     
 private:
     Unit* unit;

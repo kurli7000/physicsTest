@@ -3,8 +3,9 @@
 
 using namespace std;
 
-Simulation::Simulation() :
-    lastTick(0)
+Simulation::Simulation(string name) :
+    lastTick(0),
+    debugName(name)
 {
 }
 
@@ -23,26 +24,30 @@ int Simulation::getMs()
 bool Simulation::Tick()
 {
     int tick = getMs() / millisecondsPerTick;
-    bool processed = false;
-    
-    while (tick > lastTick)
+
+    while (lastTick < tick)
     {
+        if (lastTick % snapshotInterval == 0 && (snapshots.size() == 0 || snapshots.back().tick != lastTick))
+        {
+            TakeSnapshot();
+        }
+
         RunCommands(lastTick);
         ProcessUnits();
         lastTick++;
-        processed = true;
     }
     
-    return processed;
+    return true;
 }
 
 void Simulation::RunCommands(int tick)
 {
-    while (commandIterator != commands.end() && (*commandIterator)->GetTick() == tick)
+    while (commandIterator != commands.end() && (*commandIterator)->getTick() == tick)
     {
         Command* command = *commandIterator;
         command->Execute();
         commandIterator++;
+        cout << debugName << ": " << "Executing command at tick " << command->getTick() << endl;
     }
 }
 
@@ -82,6 +87,42 @@ void Simulation::ProcessUnits()
     Physics::ResolveCollisions(units);
 }
 
+void Simulation::TakeSnapshot()
+{
+    vector<Unit*>* backup = new vector<Unit*>();
+    Unit::CopyUnits(&units, backup);
+    Snapshot snapshot(lastTick, backup);
+    snapshots.push_back(snapshot);
+    cout << debugName << ": " << "Snapshot at " << lastTick << ", size: " << snapshots.size() << endl;
+}
+
+void Simulation::Rollback(int toTick)
+{
+    assert(toTick >= 0 && toTick < lastTick);
+    
+    cout << debugName << ": " << "Current tick: " << lastTick << ", rolling back to tick " << toTick << endl;
+    cout << debugName << ": " << "   Snapshots: " << snapshots.size() << endl;
+ 
+    // find snapshot
+    while (snapshots.back().tick > toTick)
+    {
+        cout << debugName << ": " << "   Discarding snapshot " << snapshots.back().tick << endl;
+        (*snapshots.back().units).clear();
+        snapshots.pop_back();
+    }
+
+    // restore units
+    lastTick = snapshots.back().tick;
+    cout << debugName << ": " << "   Restoring snapshot " << lastTick << endl;
+    Unit::ReplaceData(snapshots.back().units, &units);
+    
+    // back off command iterator
+    while ((*commandIterator)->getTick() > lastTick)
+    {
+        commandIterator--;
+        cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
+    }
+}
 
 Simulation::~Simulation()
 {

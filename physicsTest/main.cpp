@@ -22,12 +22,16 @@ void Mainloop()
 {
     simulation1->Tick();
     
-    // update simulation2 only now and then
-    if (rand() % 6 == 0 || (simulation1->getTick() % 60) < 30)
+    // rollback simulation2 randomly
+    int currentTick = simulation1->getTick();
+    if (currentTick > 150 && currentTick % 177 == 0)
     {
-        simulation2->Tick();
+        int toTick = currentTick - (rand() % 100 + 10);
+        simulation2->Rollback(toTick);
     }
     
+    simulation2->Tick();
+
     Rendering::Render(simulation1->getUnits(), simulation2->getUnits());
 }
 
@@ -71,12 +75,12 @@ void ExitGlut()
 void Init()
 {
     // set up 2 simulations
-    simulation1 = new Simulation();
-    simulation2 = new Simulation();
+    simulation1 = new Simulation("Simulation 1");
+    simulation2 = new Simulation("                                                     Simulation 2");
     Unit::Precalc(simulation1->getUnits(), 300);
     Unit::CopyUnits(simulation1->getUnits(), simulation2->getUnits());
     
-    // generate commands for the 1st unit
+    // generate commands for the unit number 0
     for (int i = 0; i < 500; i++)
     {
         int tick = i * 50;
