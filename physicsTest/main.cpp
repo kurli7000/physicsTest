@@ -21,7 +21,12 @@ Simulation* simulation2;
 void Mainloop()
 {
     simulation1->Tick();
-    if (rand() % 6 == 0) simulation2->Tick();
+    
+    // update simulation2 only now and then
+    if (rand() % 6 == 0 || (simulation1->getTick() % 60) < 30)
+    {
+        simulation2->Tick();
+    }
     
     Rendering::Render(simulation1->getUnits(), simulation2->getUnits());
 }
@@ -65,10 +70,24 @@ void ExitGlut()
 
 void Init()
 {
+    // set up 2 simulations
     simulation1 = new Simulation();
     simulation2 = new Simulation();
     Unit::Precalc(simulation1->getUnits(), 300);
     Unit::CopyUnits(simulation1->getUnits(), simulation2->getUnits());
+    
+    // generate commands for the 1st unit
+    for (int i = 0; i < 500; i++)
+    {
+        int tick = i * 50;
+        Vec velocity((rand() % 700) - 350, (rand() % 700) - 350);
+        Command* c1 = new Command(simulation1->getUnits()->front(), tick, velocity);
+        Command* c2 = new Command(simulation2->getUnits()->front(), tick, velocity);
+        simulation1->getCommands()->push_back(c1);
+        simulation2->getCommands()->push_back(c2);
+    }
+    simulation1->Init();
+    simulation2->Init();
 }
 
 int main(int argc, char **argv)

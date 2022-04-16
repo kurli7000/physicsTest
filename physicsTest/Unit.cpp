@@ -9,6 +9,11 @@ Unit::Unit(const Unit &u) :
 {
 }
 
+void Unit::IncreaseVelocity(Vec velocityIncrease)
+{
+    velocity += velocityIncrease;
+}
+
 void Unit::Precalc(std::vector<Unit*>* units, int numUnits)
 {
     for (int i = 0; i < numUnits; i++)

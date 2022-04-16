@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <ctime>
 #include <vector>
-#include "Physics.hpp"
+#include <list>
 #include <chrono>
+#include "Physics.hpp"
+#include "Command.hpp"
 
 class Simulation
 {
@@ -13,7 +15,10 @@ public:
     Simulation();
     ~Simulation();
     bool Tick();
+    void Init();
     std::vector<Unit*>* getUnits() { return &units; }
+    std::list<Command*>* getCommands() { return &commands; }
+    int getTick() { return lastTick; }
     
 private:
     const int millisecondsPerTick = 17;
@@ -21,8 +26,11 @@ private:
     int getMs();
     int lastTick;
     std::vector<Unit*> units;
+    std::list<Command*> commands;
+    std::list<Command*>::iterator commandIterator;
     
-    void ProcessUnits(bool pushRed);
+    void ProcessUnits();
+    void RunCommands(int tick);
 };
 
 #endif

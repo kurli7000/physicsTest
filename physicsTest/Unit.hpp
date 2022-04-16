@@ -10,7 +10,8 @@ public:
     Unit() {};
     ~Unit() {};
     Unit(const Unit &p1);
-
+    void IncreaseVelocity(Vec velocityIncrease);
+    
     static void Precalc(std::vector<Unit*>* units, int numUnits);
     static void CopyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst);
     

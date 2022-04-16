@@ -3,9 +3,15 @@
 
 using namespace std;
 
-Simulation::Simulation() : lastTick(0)
+Simulation::Simulation() :
+    lastTick(0)
+{
+}
+
+void Simulation::Init()
 {
     startTime = chrono::steady_clock::now();
+    commandIterator = commands.begin();
 }
 
 int Simulation::getMs()
@@ -21,16 +27,26 @@ bool Simulation::Tick()
     
     while (tick > lastTick)
     {
-        bool push = false;
-        if (lastTick % millisecondsPerTick == 0) push = true;
-        ProcessUnits(push);
+        RunCommands(lastTick);
+        ProcessUnits();
         lastTick++;
         processed = true;
     }
+    
     return processed;
 }
 
-void Simulation::ProcessUnits(bool pushRed)
+void Simulation::RunCommands(int tick)
+{
+    while (commandIterator != commands.end() && (*commandIterator)->GetTick() == tick)
+    {
+        Command* command = *commandIterator;
+        command->Execute();
+        commandIterator++;
+    }
+}
+
+void Simulation::ProcessUnits()
 {
     for (auto unit : units)
     {
@@ -63,13 +79,6 @@ void Simulation::ProcessUnits(bool pushRed)
         unit->velocity.y -= GRAVITY;
     }
     
-    if (pushRed)
-    {
-        if (pushRed == 1) units[0]->velocity.x += 300;
-        else units[0]->velocity.x -= 300;
-        units[0]->velocity.y += 500;
-    }
-
     Physics::ResolveCollisions(units);
 }
 
