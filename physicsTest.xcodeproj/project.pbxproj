@@ -13,6 +13,7 @@
 		DD1C1DFD1D54F814001E2E93 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */; };
 		DDF5D72B280AFA17007E12D5 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D729280AFA17007E12D5 /* Simulation.cpp */; };
 		DDF5D72E280B05B5007E12D5 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D72C280B05B5007E12D5 /* Unit.cpp */; };
+		DDF5D734280B0EC7007E12D5 /* Rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D732280B0EC7007E12D5 /* Rendering.cpp */; };
 		F470164A28040CCE00E476A3 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F470164828040CCE00E476A3 /* Physics.cpp */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +40,10 @@
 		DDF5D72A280AFA17007E12D5 /* Simulation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Simulation.hpp; sourceTree = "<group>"; };
 		DDF5D72C280B05B5007E12D5 /* Unit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		DDF5D72D280B05B5007E12D5 /* Unit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Unit.hpp; sourceTree = "<group>"; };
-		F470164828040CCE00E476A3 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = physicsTest/Physics.cpp; sourceTree = "<group>"; };
-		F470164928040CCE00E476A3 /* Physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Physics.hpp; path = physicsTest/Physics.hpp; sourceTree = "<group>"; };
+		DDF5D732280B0EC7007E12D5 /* Rendering.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Rendering.cpp; sourceTree = "<group>"; };
+		DDF5D733280B0EC7007E12D5 /* Rendering.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rendering.hpp; sourceTree = "<group>"; };
+		F470164828040CCE00E476A3 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Physics.cpp; sourceTree = "<group>"; };
+		F470164928040CCE00E476A3 /* Physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Physics.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +63,6 @@
 		DD1C1DE51D54F7DD001E2E93 = {
 			isa = PBXGroup;
 			children = (
-				DDF5D72C280B05B5007E12D5 /* Unit.cpp */,
-				DDF5D72D280B05B5007E12D5 /* Unit.hpp */,
-				DDF5D729280AFA17007E12D5 /* Simulation.cpp */,
-				DDF5D72A280AFA17007E12D5 /* Simulation.hpp */,
-				F470164828040CCE00E476A3 /* Physics.cpp */,
-				F470164928040CCE00E476A3 /* Physics.hpp */,
 				DD1C1DFC1D54F814001E2E93 /* Cocoa.framework */,
 				DD1C1DFA1D54F80E001E2E93 /* GLUT.framework */,
 				DD1C1DF81D54F80A001E2E93 /* OpenGL.framework */,
@@ -85,6 +82,14 @@
 		DD1C1DF01D54F7DD001E2E93 /* physicsTest */ = {
 			isa = PBXGroup;
 			children = (
+				DDF5D732280B0EC7007E12D5 /* Rendering.cpp */,
+				DDF5D733280B0EC7007E12D5 /* Rendering.hpp */,
+				DDF5D72C280B05B5007E12D5 /* Unit.cpp */,
+				DDF5D72D280B05B5007E12D5 /* Unit.hpp */,
+				DDF5D729280AFA17007E12D5 /* Simulation.cpp */,
+				DDF5D72A280AFA17007E12D5 /* Simulation.hpp */,
+				F470164828040CCE00E476A3 /* Physics.cpp */,
+				F470164928040CCE00E476A3 /* Physics.hpp */,
 				DD1C1DF11D54F7DD001E2E93 /* main.cpp */,
 				DD1C1DFE1D54FAC7001E2E93 /* Vec.h */,
 			);
@@ -148,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDF5D734280B0EC7007E12D5 /* Rendering.cpp in Sources */,
 				DDF5D72B280AFA17007E12D5 /* Simulation.cpp in Sources */,
 				DDF5D72E280B05B5007E12D5 /* Unit.cpp in Sources */,
 				DD1C1DF21D54F7DD001E2E93 /* main.cpp in Sources */,
