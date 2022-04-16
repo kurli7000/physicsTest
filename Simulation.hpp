@@ -16,13 +16,13 @@ public:
     std::vector<Unit*>* getUnits() { return &units; }
     
 private:
-    const int millisecondsPerTick = 33;
+    const int millisecondsPerTick = 17;
     std::chrono::steady_clock::time_point startTime;
     int getMs();
     int lastTick;
     std::vector<Unit*> units;
     
-    void ProcessUnits(int pushRed);
+    void ProcessUnits(bool pushRed);
 };
 
 #endif

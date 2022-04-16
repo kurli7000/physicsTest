@@ -1,6 +1,7 @@
 #include "Physics.hpp"
+#include "Unit.hpp"
 
-bool CreateManifold(Manifold* m)
+bool Physics::CreateManifold(Manifold* m)
 {
     Unit* A = m->A;
     Unit* B = m->B;
@@ -25,15 +26,11 @@ bool CreateManifold(Manifold* m)
     }
 }
 
-void ResolveCollision(Unit* a, Unit* b)
+void Physics::ResolveCollision(Unit* a, Unit* b)
 {
-    Manifold m;
-    
-    m.A = a;
-    m.B = b;
-    
+    Manifold m(a, b);
+        
     // Adapted from https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331
-    
     if (CreateManifold(&m))
     {
         // relative velocity
@@ -56,8 +53,7 @@ void ResolveCollision(Unit* a, Unit* b)
     }
 }
 
-
-void ResolveCollisions(std::vector<Unit*> units)
+void Physics::ResolveCollisions(std::vector<Unit*> units)
 {
     int processedUntil = 0;
     

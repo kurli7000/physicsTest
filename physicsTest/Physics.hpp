@@ -1,32 +1,32 @@
 #ifndef Physics_hpp
 #define Physics_hpp
 
-#include "Vec.h"
 #include <math.h>
 #include <vector>
+#include "Vec.h"
+#include "Unit.hpp"
 
 #define GRAVITY 0
 
-class Unit
+class Physics
 {
 public:
-    Unit() {};
-    ~Unit() {};
-    Vec m_Pos;
-    Vec m_Velocity;
-    int m_Radius;
-    int m_Mass;
-    int m_OrderNumber;
+    struct Manifold
+    {
+        Unit* A;
+        Unit* B;
+        int penetration;
+        Vec normal;
+        Manifold(Unit* a, Unit *b) : A(a), B(b) {};
+    };
+    
+    Physics() {};
+    ~Physics() {};
+    static void ResolveCollisions(std::vector<Unit*> units);
+    
+private:
+    static bool CreateManifold(Manifold* m);
+    static void ResolveCollision(Unit* a, Unit* b);
 };
-
-struct Manifold
-{
-    Unit* A;
-    Unit* B;
-    int penetration;
-    Vec normal;
-};
-
-void ResolveCollisions(std::vector<Unit*> units);
 
 #endif /* Physics_hpp */

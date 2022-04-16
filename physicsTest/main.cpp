@@ -21,8 +21,6 @@
 using namespace std;
 static int win = 0;
 
-#define RADIUS 600
-#define NUM_OBJECTS 200
 #define NUM_SEGMENTS 20
 
 Simulation* simulation1;
@@ -64,19 +62,6 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    /*
-    static clock_t timer = clock();
-    int pushRed = 0;
-    if (clock() > timer + 1000000)
-    {
-        timer = clock();
-        pushRed = (rand() % 1) + 1;
-    }
-    */
-
-    simulation1->Tick();
-    simulation2->Tick();
-    
     DrawScene(simulation1->getUnits(), -16.0f);
     DrawScene(simulation2->getUnits(), 16.0f);
     
@@ -86,6 +71,14 @@ void display()
     glEnd();
 
     glutSwapBuffers();
+}
+
+void Mainloop()
+{
+    simulation1->Tick();
+    if (rand() % 6 == 0) simulation2->Tick();
+    
+    display();
 }
 
 void idle()
@@ -108,7 +101,7 @@ void CreateGlutWindow()
 
 void CreateGlutCallbacks()
 {
-    glutDisplayFunc(display);
+    glutDisplayFunc(Mainloop);
     glutIdleFunc(idle);
 }
 
@@ -125,37 +118,12 @@ void ExitGlut()
     exit(0);
 }
 
-void Setup()
+void Init()
 {
     simulation1 = new Simulation();
     simulation2 = new Simulation();
-    
-    for (int i = 0; i < NUM_OBJECTS; i++)
-    {
-        Unit* u1 = new Unit();
-        u1->m_Pos = Vec((rand() % 32) * Vec::SCALE, (rand() % 32) * Vec::SCALE);
-        u1->m_Velocity = Vec((rand() % 32) - 16, (rand() % 32) - 16);
-        if (i == 0)
-        {
-            u1->m_Mass = 1;
-            u1->m_Radius = RADIUS * 3;
-        }
-        else
-        {
-            u1->m_Mass = 50;
-            u1->m_Radius = RADIUS;
-        }
-        u1->m_OrderNumber = i + 1;
-        simulation1->getUnits()->push_back(u1);
-        
-        Unit* u2 = new Unit();
-        u2->m_Pos = u1->m_Pos;
-        u2->m_Radius = u1->m_Radius;
-        u2->m_Velocity = u1->m_Velocity;
-        u2->m_Mass = u1->m_Mass;
-        u2->m_OrderNumber = u1->m_OrderNumber;
-        simulation2->getUnits()->push_back(u2);
-    }
+    Unit::Precalc(simulation1->getUnits(), 300);
+    Unit::CopyUnits(simulation1->getUnits(), simulation2->getUnits());
 }
 
 int main(int argc, char **argv)
@@ -164,7 +132,7 @@ int main(int argc, char **argv)
     CreateGlutWindow();
     CreateGlutCallbacks();
     InitOpenGL();
-    Setup();
+    Init();
     
     glutMainLoop();
     

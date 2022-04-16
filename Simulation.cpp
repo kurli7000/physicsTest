@@ -21,14 +21,16 @@ bool Simulation::Tick()
     
     while (tick > lastTick)
     {
-        ProcessUnits(0);
+        bool push = false;
+        if (lastTick % millisecondsPerTick == 0) push = true;
+        ProcessUnits(push);
         lastTick++;
         processed = true;
     }
     return processed;
 }
 
-void Simulation::ProcessUnits(int pushRed)
+void Simulation::ProcessUnits(bool pushRed)
 {
     for (auto unit : units)
     {
@@ -68,7 +70,7 @@ void Simulation::ProcessUnits(int pushRed)
         units[0]->m_Velocity.y += 500;
     }
 
-    ResolveCollisions(units);
+    Physics::ResolveCollisions(units);
 }
 
 
