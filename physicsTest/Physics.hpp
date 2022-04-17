@@ -22,7 +22,7 @@ public:
     
     Physics() {};
     ~Physics() {};
-    static void ResolveCollisions(std::vector<Unit*> units);
+    static void ResolveCollisions(std::vector<Unit*>* units);
     
 private:
     static bool CreateManifold(Manifold* m);

@@ -26,7 +26,7 @@ void Mainloop()
     int currentTick = simulation1->getTick();
     if (currentTick > 150 && currentTick % 177 == 0)
     {
-        int toTick = currentTick - (rand() % 100 + 10);
+        int toTick = currentTick - (rand() % 100 + 30);
         simulation2->Rollback(toTick);
     }
     
@@ -85,11 +85,12 @@ void Init()
     {
         int tick = i * 50;
         Vec velocity((rand() % 700) - 350, (rand() % 700) - 350);
-        Command* c1 = new Command(simulation1->getUnits()->front(), tick, velocity);
-        Command* c2 = new Command(simulation2->getUnits()->front(), tick, velocity);
+        Command* c1 = new Command(0, tick, velocity);
+        Command* c2 = new Command(0, tick, velocity);
         simulation1->getCommands()->push_back(c1);
         simulation2->getCommands()->push_back(c2);
     }
+    
     simulation1->Init();
     simulation2->Init();
 }

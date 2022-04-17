@@ -1,12 +1,15 @@
 #include "Command.hpp"
 
-Command::Command(Unit* unit, int tick, Vec velocityIncrease) :
+using namespace std;
+
+Command::Command(int unit, int tick, Vec velocityIncrease) :
     unit(unit),
     tick(tick),
     velocity(velocityIncrease)
 {}
 
-void Command::Execute()
+void Command::Execute(vector<Unit*>* units)
 {
-    unit->IncreaseVelocity(velocity);
+    Unit* u = (*units)[unit];
+    u->IncreaseVelocity(velocity);
 }

@@ -24,8 +24,9 @@ int Simulation::getMs()
 bool Simulation::Tick()
 {
     int tick = getMs() / millisecondsPerTick;
+    int perFrame = 0;
 
-    while (lastTick < tick)
+    while (lastTick < tick && perFrame < maxTicksPerFrame)
     {
         if (lastTick % snapshotInterval == 0 && (snapshots.size() == 0 || snapshots.back().tick != lastTick))
         {
@@ -35,6 +36,7 @@ bool Simulation::Tick()
         RunCommands(lastTick);
         ProcessUnits();
         lastTick++;
+        perFrame++;
     }
     
     return true;
@@ -45,7 +47,7 @@ void Simulation::RunCommands(int tick)
     while (commandIterator != commands.end() && (*commandIterator)->getTick() == tick)
     {
         Command* command = *commandIterator;
-        command->Execute();
+        command->Execute(&units);
         commandIterator++;
         cout << debugName << ": " << "Executing command at tick " << command->getTick() << endl;
     }
@@ -84,7 +86,7 @@ void Simulation::ProcessUnits()
         unit->velocity.y -= GRAVITY;
     }
     
-    Physics::ResolveCollisions(units);
+    Physics::ResolveCollisions(&units);
 }
 
 void Simulation::TakeSnapshot()
@@ -117,11 +119,14 @@ void Simulation::Rollback(int toTick)
     Unit::ReplaceData(snapshots.back().units, &units);
     
     // back off command iterator
-    while ((*commandIterator)->getTick() > lastTick)
+    while ((*commandIterator)->getTick() >= lastTick)
     {
         commandIterator--;
         cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
     }
+    // TODO fixme
+    commandIterator++;
+    cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
 }
 
 Simulation::~Simulation()

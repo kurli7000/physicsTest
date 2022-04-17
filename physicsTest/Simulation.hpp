@@ -33,6 +33,7 @@ private:
     
     const int millisecondsPerTick = 33;
     const int snapshotInterval = 40;
+    const int maxTicksPerFrame = 3;
     std::chrono::steady_clock::time_point startTime;
     int getMs();
     int lastTick;

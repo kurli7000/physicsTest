@@ -8,12 +8,12 @@
 class Command
 {
 public:
-    Command(Unit* unit, int tick, Vec velocityIncrease);
-    void Execute();
+    Command(int unit, int tick, Vec velocityIncrease);
+    void Execute(std::vector<Unit*>* units);
     int getTick() { return tick; }
     
 private:
-    Unit* unit;
+    int unit;
     int tick;
     Vec velocity;
 };

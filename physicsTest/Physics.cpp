@@ -53,13 +53,13 @@ void Physics::ResolveCollision(Unit* a, Unit* b)
     }
 }
 
-void Physics::ResolveCollisions(std::vector<Unit*> units)
+void Physics::ResolveCollisions(std::vector<Unit*>* units)
 {
     int processedUntil = 0;
     
-    for (auto unit : units)
+    for (auto unit : *units)
     {
-        for (auto otherUnit : units)
+        for (auto otherUnit : *units)
         {
             if (unit != otherUnit && otherUnit->orderNumber > processedUntil)
             {
