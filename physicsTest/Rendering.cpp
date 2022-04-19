@@ -10,6 +10,10 @@
 #include <GL/gl.h>
 #endif
 #include <math.h>
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
 
 void Rendering::DrawCircle(float x, float y, float r)
 {
@@ -36,13 +40,26 @@ void Rendering::DrawScene(std::vector<Unit*>* units, float offset)
     glEnd();
 }
 
-void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2)
+void drawString(float x, float y, string str)
+{
+    char arr[str.length() + 1];
+    strcpy(arr, str.c_str());
+    
+    glRasterPos3f(x, y, 0);
+
+    for (char* c = arr; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *c);
+    }
+}
+
+void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2, float durationMs)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-32, 32, -16, 16, -1.0, 1.0);
+    glOrtho(-32, 32, -18, 16, -1.0, 1.0);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -53,7 +70,14 @@ void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2)
     glBegin(GL_LINES);
     glVertex2f(0.0f, -16.0f);
     glVertex2f(0.0f, 16.0f);
+    glVertex2f(-32.0f, -16.0f);
+    glVertex2f(32.0f, -16.0f);
+
     glEnd();
+    
+    std::stringstream text;
+    text << setprecision(2) << durationMs << " ms";
+    drawString(-31, -17, text.str());
 
     glutSwapBuffers();
 }

@@ -7,7 +7,7 @@
 class Rendering
 {
 public:
-    static void Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2);
+    static void Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2, float durationMs);
     
 private:
     static const int NUM_SEGMENTS = 20;
