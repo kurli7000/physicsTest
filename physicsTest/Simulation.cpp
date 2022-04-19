@@ -129,9 +129,7 @@ void Simulation::Rollback(int toTick)
     while ((*commandIterator)->getTick() >= lastTick)
     {
         commandIterator--;
-        cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
     }
-    // TODO fixme
     commandIterator++;
     cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
 }
