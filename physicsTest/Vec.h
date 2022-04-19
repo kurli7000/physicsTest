@@ -70,6 +70,12 @@ public:
         return sqrt(dx * dx + dy * dy);
     }
     
+    void operator=(const Vec &v)
+    {
+        x = v.x;
+        y = v.y;
+    }
+
     Vec operator+(const Vec &v) const
     {
         return Vec(x + v.x, y + v.y);

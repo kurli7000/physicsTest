@@ -24,7 +24,7 @@ void Mainloop()
     
     // rollback simulation2 randomly
     int currentTick = simulation1->getTick();
-    if (currentTick > 150 && currentTick % 177 == 0)
+    if (currentTick > 200 && currentTick % 177 == 0 && !simulation2->isRollingBack())
     {
         int toTick = currentTick - (rand() % 100 + 30);
         simulation2->Rollback(toTick);

@@ -61,26 +61,8 @@ void Unit::ReplaceData(std::vector<Unit*>* src, std::vector<Unit*>* dst)
     
     for (int i = 0; i < (*src).size(); i++)
     {
-        Unit* srcunit = (*src)[i];
-        Unit* dstunit = (*dst)[i];
-        dstunit->pos = srcunit->pos;
-        dstunit->velocity = srcunit->velocity;
-        
-        /*
-        dstunit->pos.x = srcunit->pos.x;
-        dstunit->pos.y = srcunit->pos.y; //; = Vec(srcunit->pos.x, srcunit->pos.y);
-        dstunit->velocity.x = srcunit->velocity.x; //dstunit->velocity = Vec(srcunit->velocity.x, srcunit->velocity.y);
-        dstunit->velocity.y = srcunit->velocity.y;
-        */
-        //dstunit->mass = srcunit->mass;
-        //dstunit->radius = srcunit->radius;
-        //dstunit->orderNumber = srcunit->orderNumber;
-        
-        /*
-        //Doesn't work ??
-        Unit srcunit = *(*src)[i];
-        Unit dstunit = *(*dst)[i];
+        Unit& srcunit = *(*src)[i];
+        Unit& dstunit = *(*dst)[i];
         dstunit = srcunit;
-        */
     }
 }

@@ -25,8 +25,9 @@ bool Simulation::Tick()
 {
     int tick = getMs() / millisecondsPerTick;
     int perFrame = 0;
+    rollbackMode = false;
 
-    while (lastTick < tick && perFrame < maxTicksPerFrame)
+    while (lastTick < tick)
     {
         if (lastTick % snapshotInterval == 0 && (snapshots.size() == 0 || snapshots.back().tick != lastTick))
         {
@@ -37,6 +38,12 @@ bool Simulation::Tick()
         ProcessUnits();
         lastTick++;
         perFrame++;
+        
+        if (perFrame >= maxTicksPerFrame)
+        {
+            rollbackMode = true;
+            break;
+        }
     }
     
     return true;
@@ -100,7 +107,7 @@ void Simulation::TakeSnapshot()
 
 void Simulation::Rollback(int toTick)
 {
-    assert(toTick >= 0 && toTick < lastTick);
+    assert(toTick >= 0 && toTick <= lastTick);
     
     cout << debugName << ": " << "Current tick: " << lastTick << ", rolling back to tick " << toTick << endl;
     cout << debugName << ": " << "   Snapshots: " << snapshots.size() << endl;

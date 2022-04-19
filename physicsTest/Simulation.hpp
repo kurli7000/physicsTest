@@ -21,9 +21,9 @@ public:
     std::list<Command*>* getCommands() { return &commands; }
     int getTick() { return lastTick; }
     void Rollback(int toTick);
+    bool isRollingBack() { return rollbackMode; }
     
 private:
-    
     struct Snapshot
     {
         int tick;
@@ -42,6 +42,7 @@ private:
     std::list<Command*> commands;
     std::list<Command*>::iterator commandIterator;
     std::list<Snapshot> snapshots;
+    bool rollbackMode;
     
     void ProcessUnits();
     void RunCommands(int tick);
