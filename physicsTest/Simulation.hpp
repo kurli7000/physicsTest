@@ -23,6 +23,7 @@ public:
     void Rollback(int toTick);
     bool isRollingBack() { return rollbackMode; }
     float getStableMs() { return stableMs; }
+    float getMaxMs() { return maxMs; }
     
 private:
     struct Snapshot
@@ -45,6 +46,7 @@ private:
     std::list<Snapshot> snapshots;
     bool rollbackMode;
     float stableMs;
+    float maxMs;
     static const int stableMsSamples = 32;
     int msSamples[stableMsSamples];
     int samplePos = 0;

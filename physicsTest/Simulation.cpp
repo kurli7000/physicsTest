@@ -7,7 +7,7 @@ Simulation::Simulation(string name) :
     lastTick(0),
     debugName(name)
 {
-    memset(msSamples, stableMsSamples * sizeof(int), 0);
+    memset(msSamples, 0, stableMsSamples * sizeof(int));
 }
 
 void Simulation::Init()
@@ -52,8 +52,10 @@ void Simulation::Tick()
     samplePos = (samplePos + 1) % stableMsSamples;
     
     stableMs = 0.0;
+    maxMs = 0.0;
     for (int i = 0; i < stableMsSamples; i++)
     {
+        if (msSamples[i] > maxMs) maxMs = msSamples[i];
         stableMs += msSamples[i] / (float)stableMsSamples;
     }
 }
