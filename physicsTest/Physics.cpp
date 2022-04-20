@@ -1,5 +1,8 @@
 #include "Physics.hpp"
 #include "Unit.hpp"
+#include <iostream>
+
+using namespace std;
 
 bool Physics::CreateManifold(Manifold* m)
 {
@@ -40,15 +43,15 @@ void Physics::ResolveCollision(Unit* a, Unit* b)
 
         if (velAlongNormal > 0) return; // if bodies are separating, don't resolve
         
-        int inverseMassSum = (a->mass + b->mass);
+        int massSum = (a->mass + b->mass);
         int j;
 
-        if (inverseMassSum != 0)
+        if (massSum != 0)
         {
-            j = -Vec::SCALE * velAlongNormal / inverseMassSum + m.penetration;
+            j = -Vec::SCALE * velAlongNormal / massSum + (m.penetration * Vec::SCALE / penetrationAdjustment);
             Vec impulse = (m.normal * j / Vec::SCALE);
-            a->velocity -= (impulse * a->mass) / Vec::SCALE;
-            b->velocity += (impulse * b->mass) / Vec::SCALE;
+            a->velocity -= (impulse * b->mass) / Vec::SCALE;
+            b->velocity += (impulse * a->mass) / Vec::SCALE;
         }
     }
 }

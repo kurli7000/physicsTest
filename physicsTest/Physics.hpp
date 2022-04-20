@@ -27,6 +27,8 @@ public:
 private:
     static bool CreateManifold(Manifold* m);
     static void ResolveCollision(Unit* a, Unit* b);
+    
+    static const int penetrationAdjustment = 10;
 };
 
 #endif /* Physics_hpp */

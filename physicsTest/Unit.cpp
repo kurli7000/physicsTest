@@ -33,13 +33,13 @@ void Unit::Precalc(std::vector<Unit*>* units, int numUnits)
         u1->velocity = Vec((rand() % 32) - 16, (rand() % 32) - 16);
         if (i == 0)
         {
-            u1->mass = 1;
+            u1->mass = 10;
             u1->radius = RADIUS * 3;
         }
         else
         {
-            u1->mass = 50;
-            u1->radius = RADIUS;
+            u1->mass = 1;
+            u1->radius = RADIUS / 2 + (rand() % 400);
         }
         u1->orderNumber = i + 1;
         units->push_back(u1);

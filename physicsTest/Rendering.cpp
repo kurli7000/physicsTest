@@ -34,7 +34,7 @@ void Rendering::DrawScene(std::vector<Unit*>* units, float offset, bool rollback
         DrawCircle((float)u->pos.x / (float)Vec::SCALE - 16.0f + offset,
                    (float)u->pos.y / (float)Vec::SCALE - 16.0f,
                    (float)u->radius / (float)Vec::SCALE);
-        glColor3f(1.0f, 1.0f, 1.0f);
+        if (!rollback) glColor3f(1.0f, 1.0f, 1.0f);
     }
     
     glEnd();
@@ -76,11 +76,11 @@ void Rendering::Render(Simulation* simulation1, Simulation* simulation2)
     glEnd();
     
     std::stringstream text;
-    text << setprecision(1) << std::fixed << simulation1->getStableMs()<< " ms (max " << simulation1->getMaxMs() << ")";
+    text << setprecision(1) << std::fixed << simulation1->getStableMs()<< " ms (max " << simulation1->getMaxMs() << " ms)";
     drawString(-31, -17, text.str());
 
     std::stringstream text2;
-    text2 << setprecision(1) << std::fixed << simulation2->getStableMs() << " ms (max " << simulation2->getMaxMs() << ")";
+    text2 << setprecision(1) << std::fixed << simulation2->getStableMs() << " ms (max " << simulation2->getMaxMs() << " ms)";
     drawString(1, -17, text2.str());
     
     glutSwapBuffers();
