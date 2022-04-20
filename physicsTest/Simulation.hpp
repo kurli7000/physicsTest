@@ -15,13 +15,14 @@ class Simulation
 public:
     Simulation(std::string name);
     ~Simulation();
-    bool Tick();
+    void Tick();
     void Init();
     std::vector<Unit*>* getUnits() { return &units; }
     std::list<Command*>* getCommands() { return &commands; }
     int getTick() { return lastTick; }
     void Rollback(int toTick);
     bool isRollingBack() { return rollbackMode; }
+    float getStableMs() { return stableMs; }
     
 private:
     struct Snapshot
@@ -43,7 +44,11 @@ private:
     std::list<Command*>::iterator commandIterator;
     std::list<Snapshot> snapshots;
     bool rollbackMode;
-    
+    float stableMs;
+    static const int stableMsSamples = 32;
+    int msSamples[stableMsSamples];
+    int samplePos = 0;
+
     void ProcessUnits();
     void RunCommands(int tick);
     void TakeSnapshot();

@@ -53,7 +53,7 @@ void drawString(float x, float y, string str)
     }
 }
 
-void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2, float durationMs)
+void Rendering::Render(Simulation* simulation1, Simulation* simulation2)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -64,8 +64,8 @@ void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2, f
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    DrawScene(units1, -16.0f);
-    DrawScene(units2, 16.0f);
+    DrawScene(simulation1->getUnits(), -16.0f);
+    DrawScene(simulation2->getUnits(), 16.0f);
     
     glBegin(GL_LINES);
     glVertex2f(0.0f, -16.0f);
@@ -76,8 +76,12 @@ void Rendering::Render(std::vector<Unit*>* units1, std::vector<Unit*>* units2, f
     glEnd();
     
     std::stringstream text;
-    text << setprecision(2) << durationMs << " ms";
+    text << setprecision(2) << simulation1->getStableMs()<< " ms";
     drawString(-31, -17, text.str());
 
+    std::stringstream text2;
+    text2 << setprecision(2) << simulation2->getStableMs() << " ms";
+    drawString(1, -17, text2.str());
+    
     glutSwapBuffers();
 }

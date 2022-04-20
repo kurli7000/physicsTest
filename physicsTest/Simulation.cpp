@@ -7,6 +7,7 @@ Simulation::Simulation(string name) :
     lastTick(0),
     debugName(name)
 {
+    memset(msSamples, stableMsSamples * sizeof(int), 0);
 }
 
 void Simulation::Init()
@@ -21,9 +22,10 @@ int Simulation::getMs()
     return (int)chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
 }
 
-bool Simulation::Tick()
-{
-    int tick = getMs() / millisecondsPerTick;
+void Simulation::Tick()
+{    
+    int startMs = getMs();
+    int tick = startMs / millisecondsPerTick;
     int perFrame = 0;
     rollbackMode = false;
 
@@ -46,7 +48,14 @@ bool Simulation::Tick()
         }
     }
     
-    return true;
+    msSamples[samplePos] = getMs() - startMs;
+    samplePos = (samplePos + 1) % stableMsSamples;
+    
+    stableMs = 0.0;
+    for (int i = 0; i < stableMsSamples; i++)
+    {
+        stableMs += msSamples[i] / (float)stableMsSamples;
+    }
 }
 
 void Simulation::RunCommands(int tick)

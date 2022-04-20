@@ -20,12 +20,7 @@ Simulation* simulation2;
 
 void Mainloop()
 {
-    auto start = chrono::steady_clock::now();
     simulation1->Tick();
-    auto durationMs = (int)chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start).count();
-    static float stableDuration = 0.0f;
-    
-    stableDuration = stableDuration * 0.975 + durationMs * 0.025;
     
     // rollback simulation2 randomly
     int currentTick = simulation1->getTick();
@@ -37,7 +32,7 @@ void Mainloop()
     
     simulation2->Tick();
 
-    Rendering::Render(simulation1->getUnits(), simulation2->getUnits(), stableDuration);
+    Rendering::Render(simulation1, simulation2);
 }
 
 void idle()
