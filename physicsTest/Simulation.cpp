@@ -5,7 +5,8 @@ using namespace std;
 
 Simulation::Simulation(string name) :
     lastTick(0),
-    debugName(name)
+    debugName(name),
+    snapshots(66)
 {
     memset(msSamples, 0, stableMsSamples * sizeof(int));
 }
@@ -31,7 +32,7 @@ void Simulation::Tick()
 
     while (lastTick < tick)
     {
-        if (lastTick % snapshotInterval == 0 && (snapshots.size() == 0 || snapshots.back().tick != lastTick))
+        if (lastTick % snapshotInterval == 0)
         {
             TakeSnapshot();
         }
@@ -113,7 +114,7 @@ void Simulation::TakeSnapshot()
     Unit::CopyUnits(&units, backup);
     Snapshot snapshot(lastTick, backup);
     snapshots.push_back(snapshot);
-    cout << debugName << ": " << "Snapshot at " << lastTick << ", size: " << snapshots.size() << endl;
+    cout << debugName << ": " << "Snapshot at " << lastTick << endl;
 }
 
 void Simulation::Rollback(int toTick)
@@ -121,14 +122,14 @@ void Simulation::Rollback(int toTick)
     assert(toTick >= 0 && toTick <= lastTick);
     
     cout << debugName << ": " << "Current tick: " << lastTick << ", rolling back to tick " << toTick << endl;
-    cout << debugName << ": " << "   Snapshots: " << snapshots.size() << endl;
- 
-    // find snapshot
+
+    // step 1 back to avoid using current head
+    snapshots.backward();
     while (snapshots.back().tick > toTick)
     {
-        cout << debugName << ": " << "   Discarding snapshot " << snapshots.back().tick << endl;
-        (*snapshots.back().units).clear();
-        snapshots.pop_back();
+        cout << debugName << ": " << "   Snapshot rollback at " << snapshots.back().tick << endl;
+        snapshots.back().Release();
+        snapshots.backward();
     }
 
     // restore units

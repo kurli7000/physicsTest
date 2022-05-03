@@ -45,6 +45,7 @@
 		DDF5D733280B0EC7007E12D5 /* Rendering.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rendering.hpp; sourceTree = "<group>"; };
 		DDF5D735280B214B007E12D5 /* Command.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Command.cpp; sourceTree = "<group>"; };
 		DDF5D736280B214B007E12D5 /* Command.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Command.hpp; sourceTree = "<group>"; };
+		DDF5D7392821A99C007E12D5 /* CircularBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircularBuffer.hpp; sourceTree = "<group>"; };
 		F470164828040CCE00E476A3 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Physics.cpp; sourceTree = "<group>"; };
 		F470164928040CCE00E476A3 /* Physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Physics.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +86,7 @@
 		DD1C1DF01D54F7DD001E2E93 /* physicsTest */ = {
 			isa = PBXGroup;
 			children = (
+				DDF5D7392821A99C007E12D5 /* CircularBuffer.hpp */,
 				DDF5D732280B0EC7007E12D5 /* Rendering.cpp */,
 				DDF5D733280B0EC7007E12D5 /* Rendering.hpp */,
 				DDF5D72C280B05B5007E12D5 /* Unit.cpp */,

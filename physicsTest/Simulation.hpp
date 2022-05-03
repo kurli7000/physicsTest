@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Physics.hpp"
 #include "Command.hpp"
+#include "CircularBuffer.hpp"
 
 class Simulation
 {
@@ -30,7 +31,16 @@ private:
     {
         int tick;
         std::vector<Unit*>* units;
+        
         Snapshot(int lastTick, std::vector<Unit*>* backup) : tick(lastTick), units(backup) {};
+        Snapshot() : tick(INT_MAX), units(nullptr) {};
+        
+        void Release()
+        {
+            tick = INT_MAX;
+            delete units;
+            units = nullptr;
+        }
     };
     
     const int millisecondsPerTick = 33;
@@ -43,7 +53,7 @@ private:
     std::vector<Unit*> units;
     std::list<Command*> commands;
     std::list<Command*>::iterator commandIterator;
-    std::list<Snapshot> snapshots;
+    CircularBuffer<Snapshot> snapshots;
     bool rollbackMode;
     float stableMs;
     float maxMs;
