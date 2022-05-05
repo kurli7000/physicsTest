@@ -26,12 +26,12 @@ void Mainloop()
     int currentTick = simulation1->getTick();
     if (currentTick > 200 && currentTick % 177 == 0 && !simulation2->isRollingBack())
     {
-        int toTick = currentTick - (rand() % 100 + 30);
+        int toTick = currentTick - (rand() % 200 + 30);
         simulation2->Rollback(toTick);
     }
     
     simulation2->Tick();
-
+    
     Rendering::Render(simulation1, simulation2);
 }
 
@@ -77,6 +77,7 @@ void Init()
     // set up 2 simulations
     simulation1 = new Simulation("Simulation 1");
     simulation2 = new Simulation("                                                     Simulation 2");
+    
     Unit::Precalc(simulation1->getUnits(), 300);
     Unit::CopyUnits(simulation1->getUnits(), simulation2->getUnits());
     

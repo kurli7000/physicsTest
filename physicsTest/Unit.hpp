@@ -11,7 +11,15 @@ public:
     ~Unit() {};
     Unit(const Unit &p1);
     Unit& operator = (const Unit& other);
+    
+    struct float2 {
+        float x;
+        float y;
+        float2(float _x, float _y) : x(_x), y(_y) {};
+    };
 
+    float2 getRenderingPosition(float frameFraction);
+    
     void IncreaseVelocity(Vec velocityIncrease);
     static void Precalc(std::vector<Unit*>* units, int numUnits);
     static void CopyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst);

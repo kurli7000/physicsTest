@@ -25,6 +25,8 @@ public:
     bool isRollingBack() { return rollbackMode; }
     float getStableMs() { return stableMs; }
     float getMaxMs() { return maxMs; }
+    float getFrameFraction();
+    int getMs();
     
 private:
     struct Snapshot
@@ -43,11 +45,10 @@ private:
         }
     };
     
-    const int millisecondsPerTick = 33;
+    const int millisecondsPerTick = 50;
     const int snapshotInterval = 40;
     const int maxTicksPerFrame = 3;
     std::chrono::steady_clock::time_point startTime;
-    int getMs();
     int lastTick;
     std::string debugName;
     std::vector<Unit*> units;

@@ -19,6 +19,12 @@ Unit& Unit::operator = (const Unit& other)
     return *this;
 }
 
+Unit::float2 Unit::getRenderingPosition(float frameFraction)
+{
+    return float2(float(pos.x) / float(Vec::SCALE) + float(velocity.x) / float(Vec::SCALE) * frameFraction,
+                  float(pos.y) / float(Vec::SCALE) + float(velocity.y) / float(Vec::SCALE) * frameFraction);
+}
+
 void Unit::IncreaseVelocity(Vec velocityIncrease)
 {
     velocity += velocityIncrease;

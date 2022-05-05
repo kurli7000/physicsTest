@@ -13,8 +13,9 @@ public:
 private:
     static const int NUM_SEGMENTS = 20;
     
-    static void DrawCircle(float x, float y, float r);
-    static void DrawScene(std::vector<Unit*>* units, float offset, bool rollback);
+    static void DrawCircle(float x, float y, float r, bool distort, float time);
+    static void DrawScene(std::vector<Unit*>* units, float fraction, float offset, bool rollback, float time);
+    static float distortX(float y, float t);
 };
 
 #endif /* Rendering_hpp */

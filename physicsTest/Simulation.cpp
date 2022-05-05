@@ -61,6 +61,11 @@ void Simulation::Tick()
     }
 }
 
+float Simulation::getFrameFraction()
+{
+    return float(getMs() - lastTick * millisecondsPerTick) / float(millisecondsPerTick);
+}
+
 void Simulation::RunCommands(int tick)
 {
     while (commandIterator != commands.end() && (*commandIterator)->getTick() == tick)
