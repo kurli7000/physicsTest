@@ -8,13 +8,13 @@
 class Rendering
 {
 public:
-    static void Render(Simulation* simulation1, Simulation* simulation2);
+    static void render(int ms, Simulation* simulation1, Simulation* simulation2);
     
 private:
     static const int NUM_SEGMENTS = 20;
     
-    static void DrawCircle(float x, float y, float r, bool distort, float time);
-    static void DrawScene(std::vector<Unit*>* units, float fraction, float offset, bool rollback, float time);
+    static void drawCircle(float x, float y, float r, bool distort, float time);
+    static void drawScene(std::vector<Unit*>* units, float fraction, float offset, bool rollback, float time);
     static float distortX(float y, float t);
 };
 

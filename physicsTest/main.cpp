@@ -18,21 +18,25 @@ static int win = 0;
 Simulation* simulation1;
 Simulation* simulation2;
 
-void Mainloop()
+void Update()
 {
-    simulation1->Tick();
+    static auto startTime = chrono::steady_clock::now();
+    auto now = chrono::steady_clock::now();
+    int ms = (int)chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+
+    simulation1->update(ms);
     
     // rollback simulation2 randomly
     int currentTick = simulation1->getTick();
     if (currentTick > 200 && currentTick % 177 == 0 && !simulation2->isRollingBack())
     {
         int toTick = currentTick - (rand() % 200 + 30);
-        simulation2->Rollback(toTick);
+        simulation2->rollback(toTick);
     }
     
-    simulation2->Tick();
+    simulation2->update(ms);
     
-    Rendering::Render(simulation1, simulation2);
+    Rendering::render(ms, simulation1, simulation2);
 }
 
 void idle()
@@ -55,7 +59,7 @@ void CreateGlutWindow()
 
 void CreateGlutCallbacks()
 {
-    glutDisplayFunc(Mainloop);
+    glutDisplayFunc(Update);
     glutIdleFunc(idle);
 }
 
@@ -76,10 +80,10 @@ void Init()
 {
     // set up 2 simulations
     simulation1 = new Simulation("Simulation 1");
-    simulation2 = new Simulation("                                                     Simulation 2");
+    simulation2 = new Simulation("Simulation 2");
     
-    Unit::Precalc(simulation1->getUnits(), 300);
-    Unit::CopyUnits(simulation1->getUnits(), simulation2->getUnits());
+    Unit::generateUnits(simulation1->getUnits(), 300);
+    Unit::copyUnits(simulation1->getUnits(), simulation2->getUnits());
     
     // generate commands for the unit number 0
     for (int i = 0; i < 500; i++)
@@ -92,8 +96,8 @@ void Init()
         simulation2->getCommands()->push_back(c2);
     }
     
-    simulation1->Init();
-    simulation2->Init();
+    simulation1->init();
+    simulation2->init();
 }
 
 int main(int argc, char **argv)

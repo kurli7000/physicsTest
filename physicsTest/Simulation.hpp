@@ -16,17 +16,18 @@ class Simulation
 public:
     Simulation(std::string name);
     ~Simulation();
-    void Tick();
-    void Init();
+    
+    void update(int ms);
+    void init();
+    
     std::vector<Unit*>* getUnits() { return &units; }
     std::list<Command*>* getCommands() { return &commands; }
     int getTick() { return lastTick; }
-    void Rollback(int toTick);
+    void rollback(int toTick);
     bool isRollingBack() { return rollbackMode; }
     float getStableMs() { return stableMs; }
     float getMaxMs() { return maxMs; }
-    float getFrameFraction();
-    int getMs();
+    float getFrameFraction(int ms);
     
 private:
     struct Snapshot
@@ -47,8 +48,7 @@ private:
     
     const int millisecondsPerTick = 50;
     const int snapshotInterval = 40;
-    const int maxTicksPerFrame = 3;
-    std::chrono::steady_clock::time_point startTime;
+    const int maxTicksPerFrame = 2;
     int lastTick;
     std::string debugName;
     std::vector<Unit*> units;
@@ -62,9 +62,9 @@ private:
     int msSamples[stableMsSamples];
     int samplePos = 0;
 
-    void ProcessUnits();
-    void RunCommands(int tick);
-    void TakeSnapshot();
+    void processUnits();
+    void runCommands(int tick);
+    void takeSnapshot();
 };
 
 #endif

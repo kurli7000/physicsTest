@@ -11,22 +11,15 @@ Simulation::Simulation(string name) :
     memset(msSamples, 0, stableMsSamples * sizeof(int));
 }
 
-void Simulation::Init()
+void Simulation::init()
 {
-    startTime = chrono::steady_clock::now();
     commandIterator = commands.begin();
 }
 
-int Simulation::getMs()
-{
-    auto now = chrono::steady_clock::now();
-    return (int)chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
-}
-
-void Simulation::Tick()
+void Simulation::update(int ms)
 {    
-    int startMs = getMs();
-    int tick = startMs / millisecondsPerTick;
+    auto startTime = chrono::steady_clock::now();
+    int tick = ms / millisecondsPerTick;
     int perFrame = 0;
     rollbackMode = false;
 
@@ -34,11 +27,11 @@ void Simulation::Tick()
     {
         if (lastTick % snapshotInterval == 0)
         {
-            TakeSnapshot();
+            takeSnapshot();
         }
 
-        RunCommands(lastTick);
-        ProcessUnits();
+        runCommands(lastTick);
+        processUnits();
         lastTick++;
         perFrame++;
         
@@ -49,7 +42,10 @@ void Simulation::Tick()
         }
     }
     
-    msSamples[samplePos] = getMs() - startMs;
+    // calculate durations
+    auto now = chrono::steady_clock::now();
+    int durationMs = (int)chrono::duration_cast<chrono::milliseconds>(now - startTime).count();
+    msSamples[samplePos] = durationMs;
     samplePos = (samplePos + 1) % stableMsSamples;
     
     stableMs = 0.0;
@@ -61,23 +57,23 @@ void Simulation::Tick()
     }
 }
 
-float Simulation::getFrameFraction()
+float Simulation::getFrameFraction(int ms)
 {
-    return float(getMs() - lastTick * millisecondsPerTick) / float(millisecondsPerTick);
+    return float(ms - lastTick * millisecondsPerTick) / float(millisecondsPerTick);
 }
 
-void Simulation::RunCommands(int tick)
+void Simulation::runCommands(int tick)
 {
     while (commandIterator != commands.end() && (*commandIterator)->getTick() == tick)
     {
         Command* command = *commandIterator;
-        command->Execute(&units);
+        command->execute(&units);
         commandIterator++;
         cout << debugName << ": " << "Executing command at tick " << command->getTick() << endl;
     }
 }
 
-void Simulation::ProcessUnits()
+void Simulation::processUnits()
 {
     for (auto unit : units)
     {
@@ -110,19 +106,19 @@ void Simulation::ProcessUnits()
         unit->velocity.y -= GRAVITY;
     }
     
-    Physics::ResolveCollisions(&units);
+    Physics::resolveCollisions(&units);
 }
 
-void Simulation::TakeSnapshot()
+void Simulation::takeSnapshot()
 {
     vector<Unit*>* backup = new vector<Unit*>();
-    Unit::CopyUnits(&units, backup);
+    Unit::copyUnits(&units, backup);
     Snapshot snapshot(lastTick, backup);
     snapshots.push_back(snapshot);
     cout << debugName << ": " << "Snapshot at " << lastTick << endl;
 }
 
-void Simulation::Rollback(int toTick)
+void Simulation::rollback(int toTick)
 {
     assert(toTick >= 0 && toTick <= lastTick);
     
@@ -140,7 +136,7 @@ void Simulation::Rollback(int toTick)
     // restore units
     lastTick = snapshots.back().tick;
     cout << debugName << ": " << "   Restoring snapshot " << lastTick << endl;
-    Unit::ReplaceData(snapshots.back().units, &units);
+    Unit::replaceData(snapshots.back().units, &units);
     
     // back off command iterator
     while ((*commandIterator)->getTick() >= lastTick)

@@ -25,12 +25,12 @@ Unit::float2 Unit::getRenderingPosition(float frameFraction)
                   float(pos.y) / float(Vec::SCALE) + float(velocity.y) / float(Vec::SCALE) * frameFraction);
 }
 
-void Unit::IncreaseVelocity(Vec velocityIncrease)
+void Unit::increaseVelocity(Vec velocityIncrease)
 {
     velocity += velocityIncrease;
 }
 
-void Unit::Precalc(std::vector<Unit*>* units, int numUnits)
+void Unit::generateUnits(std::vector<Unit*>* units, int numUnits)
 {
     for (int i = 0; i < numUnits; i++)
     {
@@ -52,7 +52,7 @@ void Unit::Precalc(std::vector<Unit*>* units, int numUnits)
     }
 }
 
-void Unit::CopyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst)
+void Unit::copyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst)
 {
     for (auto u1 : *src)
     {
@@ -61,7 +61,7 @@ void Unit::CopyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst)
     }
 }
 
-void Unit::ReplaceData(std::vector<Unit*>* src, std::vector<Unit*>* dst)
+void Unit::replaceData(std::vector<Unit*>* src, std::vector<Unit*>* dst)
 {
     assert((*src).size() == (*dst).size());
     

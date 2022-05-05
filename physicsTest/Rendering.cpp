@@ -23,7 +23,7 @@ float Rendering::distortX(float y, float t)
     return fabs(pow(s, 10.0)) + sin(y * 0.3 - t * 0.1) * 0.5 + 0.5;
 }
 
-void Rendering::DrawCircle(float x, float y, float r, bool distort, float time)
+void Rendering::drawCircle(float x, float y, float r, bool distort, float time)
 {
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < NUM_SEGMENTS; i++)
@@ -38,14 +38,14 @@ void Rendering::DrawCircle(float x, float y, float r, bool distort, float time)
     glEnd();
 }
 
-void Rendering::DrawScene(std::vector<Unit*>* units, float fraction, float offset, bool rollback, float time)
+void Rendering::drawScene(std::vector<Unit*>* units, float fraction, float offset, bool rollback, float time)
 {
     glColor3f(1.0f, 0.0f, 0.0f);
     
     for (auto u : *units)
     {
         auto pos = u->getRenderingPosition(fraction);
-        DrawCircle(pos.x - 16.0 + offset, pos.y - 16.0f, (float)u->radius / (float)Vec::SCALE, rollback, time);
+        drawCircle(pos.x - 16.0 + offset, pos.y - 16.0f, (float)u->radius / (float)Vec::SCALE, rollback, time);
         if (!rollback) glColor3f(1.0f, 1.0f, 1.0f);
     }
     
@@ -65,7 +65,7 @@ void drawString(float x, float y, string str, void* font = GLUT_BITMAP_9_BY_15)
     }
 }
 
-void Rendering::Render(Simulation* simulation1, Simulation* simulation2)
+void Rendering::render(int ms, Simulation* simulation1, Simulation* simulation2)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -76,18 +76,18 @@ void Rendering::Render(Simulation* simulation1, Simulation* simulation2)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    DrawScene(
+    drawScene(
         simulation1->getUnits(),
-        simulation1->getFrameFraction(),
+        simulation1->getFrameFraction(ms),
         -16.0f,
         simulation1->isRollingBack(),
-        simulation1->getMs() / 100.0f);
-    DrawScene(
+        ms / 100.0f);
+    drawScene(
         simulation2->getUnits(),
         0.0f,
         16.0f,
         simulation2->isRollingBack(),
-        simulation2->getMs() / 100.0f);
+        ms / 100.0f);
     
     glColor3f(1.0, 1.0, 1.0);
     

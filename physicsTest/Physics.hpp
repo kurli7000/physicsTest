@@ -22,11 +22,11 @@ public:
     
     Physics() {};
     ~Physics() {};
-    static void ResolveCollisions(std::vector<Unit*>* units);
+    static void resolveCollisions(std::vector<Unit*>* units);
     
 private:
-    static bool CreateManifold(Manifold* m);
-    static void ResolveCollision(Unit* a, Unit* b);
+    static bool createManifold(Manifold* m);
+    static void resolveCollision(Unit* a, Unit* b);
     
     static const int penetrationAdjustment = 10;
 };

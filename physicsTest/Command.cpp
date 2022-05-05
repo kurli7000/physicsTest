@@ -8,8 +8,8 @@ Command::Command(int unit, int tick, Vec velocityIncrease) :
     velocity(velocityIncrease)
 {}
 
-void Command::Execute(vector<Unit*>* units)
+void Command::execute(vector<Unit*>* units)
 {
     Unit* u = (*units)[unit];
-    u->IncreaseVelocity(velocity);
+    u->increaseVelocity(velocity);
 }
