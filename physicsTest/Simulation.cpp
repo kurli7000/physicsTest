@@ -73,6 +73,18 @@ void Simulation::runCommands(int tick)
     }
 }
 
+int Simulation::getNextCommandTick()
+{
+    int tick = 0;
+    if (commandIterator != commands.end())
+    {
+        commandIterator++;
+        tick = (*commandIterator)->getTick();
+        commandIterator--;
+    }
+    return tick;
+}
+
 void Simulation::processUnits()
 {
     for (auto unit : units)

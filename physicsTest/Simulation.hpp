@@ -28,6 +28,7 @@ public:
     float getStableMs() { return stableMs; }
     float getMaxMs() { return maxMs; }
     float getFrameFraction(int ms);
+    int getNextCommandTick();
     
 private:
     struct Snapshot

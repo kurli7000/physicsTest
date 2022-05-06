@@ -90,7 +90,7 @@ void Init()
     for (int i = 0; i < 500; i++)
     {
         int tick = i * 50;
-        Vec velocity((rand() % 700) - 350, (rand() % 700) - 350);
+        Vec velocity((rand() % 1200) - 600, (rand() % 1200) - 600);
         Command* c1 = new Command(0, tick, velocity);
         Command* c2 = new Command(0, tick, velocity);
         simulation1->getCommands()->push_back(c1);

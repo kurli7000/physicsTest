@@ -94,11 +94,13 @@ void Rendering::render(int ms)
     glEnd();
     
     std::stringstream text;
-    text << "tick: " << simulation1->getTick() << ", exec: " << setprecision(1) << std::fixed << simulation1->getStableMs()<< " ms (max " << simulation1->getMaxMs() << " ms)";
+    text << "tick: " << simulation1->getTick() << ", next cmd: " << simulation1->getNextCommandTick() << ", exec: "
+        << setprecision(1) << std::fixed << simulation1->getStableMs()<< " ms (max " << simulation1->getMaxMs() << " ms)";
     drawString(-31, -17, text.str());
 
     std::stringstream text2;
-    text2 << "tick: " << simulation2->getTick() << ", exec: " << setprecision(1) << std::fixed << simulation2->getStableMs() << " ms (max " << simulation2->getMaxMs() << " ms)";
+    text2 << "tick: " << simulation2->getTick() << ", next cmd: " << simulation2->getNextCommandTick() << ", exec: "
+        << setprecision(1) << std::fixed << simulation2->getStableMs() << " ms (max " << simulation2->getMaxMs() << " ms)";
     drawString(1, -17, text2.str());
     
     if (simulation2->isRollingBack())
