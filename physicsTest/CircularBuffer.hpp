@@ -51,8 +51,8 @@ public:
     void push_back(T data)
     {
         assert(head != nullptr);
-        head->data = data;
         forward();
+        head->data = data;
     }
     
     void forward()

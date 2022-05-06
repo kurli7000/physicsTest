@@ -19,8 +19,8 @@ public:
     };
 
     float2 getRenderingPosition(float frameFraction);
-    
     void increaseVelocity(Vec velocityIncrease);
+    
     static void generateUnits(std::vector<Unit*>* units, int numUnits);
     static void copyUnits(std::vector<Unit*>* src, std::vector<Unit*>* dst);
     static void replaceData(std::vector<Unit*>* src, std::vector<Unit*>* dst);

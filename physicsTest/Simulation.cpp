@@ -5,21 +5,17 @@ using namespace std;
 
 Simulation::Simulation(string name) :
     lastTick(0),
+    commandPosition(0),
     debugName(name),
-    snapshots(66)
+    snapshots(1000 / MS_PER_TICK * 5) // 5 second buffer
 {
     memset(msSamples, 0, stableMsSamples * sizeof(int));
-}
-
-void Simulation::init()
-{
-    commandIterator = commands.begin();
 }
 
 void Simulation::update(int ms)
 {    
     auto startTime = chrono::steady_clock::now();
-    int tick = ms / millisecondsPerTick;
+    int tick = ms / MS_PER_TICK;
     int perFrame = 0;
     rollbackMode = false;
 
@@ -59,29 +55,41 @@ void Simulation::update(int ms)
 
 float Simulation::getFrameFraction(int ms)
 {
-    return float(ms - lastTick * millisecondsPerTick) / float(millisecondsPerTick);
+    return float(ms - lastTick * MS_PER_TICK) / float(MS_PER_TICK);
+}
+
+void Simulation::addCommand(Command *cmd)
+{
+    commands.push_back(cmd);
+    
+    // if command is in the past, roll back
+    if (cmd->getTick() < lastTick)
+    {
+        rollback(cmd->getTick());
+    }
 }
 
 void Simulation::runCommands(int tick)
 {
-    while (commandIterator != commands.end() && (*commandIterator)->getTick() == tick)
+    while (commands.size() > commandPosition && commands[commandPosition]->getTick() == tick)
     {
-        Command* command = *commandIterator;
+        Command* command = commands[commandPosition];
         command->execute(&units);
-        commandIterator++;
+        commandPosition++;
         cout << debugName << ": " << "Executing command at tick " << command->getTick() << endl;
     }
 }
 
 int Simulation::getNextCommandTick()
 {
-    int tick = 0;
-    if (commandIterator != commands.end())
+    int tick = -1;
+    
+    if (commands.size() > commandPosition)
     {
-        commandIterator++;
-        tick = (*commandIterator)->getTick();
-        commandIterator--;
+        //cout << "commands.size " + commands.size() << ", commandPosition"
+        tick = commands[commandPosition]->getTick();
     }
+    
     return tick;
 }
 
@@ -136,8 +144,6 @@ void Simulation::rollback(int toTick)
     
     cout << debugName << ": " << "Current tick: " << lastTick << ", rolling back to tick " << toTick << endl;
 
-    // step 1 back to avoid using current head
-    snapshots.backward();
     while (snapshots.back().tick > toTick)
     {
         cout << debugName << ": " << "   Snapshot rollback at " << snapshots.back().tick << endl;
@@ -150,13 +156,13 @@ void Simulation::rollback(int toTick)
     cout << debugName << ": " << "   Restoring snapshot " << lastTick << endl;
     Unit::replaceData(snapshots.back().units, &units);
     
-    // back off command iterator
-    while ((*commandIterator)->getTick() >= lastTick)
+    // back off command buffer
+    while (commandPosition > 0 && commands[commandPosition - 1]->getTick() >= lastTick)
     {
-        commandIterator--;
+        commandPosition--;
     }
-    commandIterator++;
-    cout << debugName << ": " << "   Command buffer at tick " << (*commandIterator)->getTick() << endl;
+
+    cout << debugName << ": " << "   Command buffer at tick " << commands[commandPosition]->getTick() << endl;
 }
 
 Simulation::~Simulation()

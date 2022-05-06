@@ -15,6 +15,7 @@
 		DDF5D72E280B05B5007E12D5 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D72C280B05B5007E12D5 /* Unit.cpp */; };
 		DDF5D734280B0EC7007E12D5 /* Rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D732280B0EC7007E12D5 /* Rendering.cpp */; };
 		DDF5D737280B214B007E12D5 /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D735280B214B007E12D5 /* Command.cpp */; };
+		DDF5D73D28250EB7007E12D5 /* CommandDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF5D73B28250EB7007E12D5 /* CommandDispatcher.cpp */; };
 		F470164A28040CCE00E476A3 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F470164828040CCE00E476A3 /* Physics.cpp */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,8 @@
 		DDF5D735280B214B007E12D5 /* Command.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Command.cpp; sourceTree = "<group>"; };
 		DDF5D736280B214B007E12D5 /* Command.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Command.hpp; sourceTree = "<group>"; };
 		DDF5D7392821A99C007E12D5 /* CircularBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircularBuffer.hpp; sourceTree = "<group>"; };
+		DDF5D73B28250EB7007E12D5 /* CommandDispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandDispatcher.cpp; sourceTree = "<group>"; };
+		DDF5D73C28250EB7007E12D5 /* CommandDispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandDispatcher.hpp; sourceTree = "<group>"; };
 		F470164828040CCE00E476A3 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Physics.cpp; sourceTree = "<group>"; };
 		F470164928040CCE00E476A3 /* Physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Physics.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +102,8 @@
 				DD1C1DFE1D54FAC7001E2E93 /* Vec.h */,
 				DDF5D735280B214B007E12D5 /* Command.cpp */,
 				DDF5D736280B214B007E12D5 /* Command.hpp */,
+				DDF5D73B28250EB7007E12D5 /* CommandDispatcher.cpp */,
+				DDF5D73C28250EB7007E12D5 /* CommandDispatcher.hpp */,
 			);
 			path = physicsTest;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF5D734280B0EC7007E12D5 /* Rendering.cpp in Sources */,
+				DDF5D73D28250EB7007E12D5 /* CommandDispatcher.cpp in Sources */,
 				DDF5D737280B214B007E12D5 /* Command.cpp in Sources */,
 				DDF5D72B280AFA17007E12D5 /* Simulation.cpp in Sources */,
 				DDF5D72E280B05B5007E12D5 /* Unit.cpp in Sources */,

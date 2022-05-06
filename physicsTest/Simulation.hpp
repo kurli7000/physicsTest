@@ -18,17 +18,17 @@ public:
     ~Simulation();
     
     void update(int ms);
-    void init();
     
     std::vector<Unit*>* getUnits() { return &units; }
-    std::list<Command*>* getCommands() { return &commands; }
     int getTick() { return lastTick; }
-    void rollback(int toTick);
     bool isRollingBack() { return rollbackMode; }
     float getStableMs() { return stableMs; }
     float getMaxMs() { return maxMs; }
     float getFrameFraction(int ms);
     int getNextCommandTick();
+    void addCommand(Command* cmd);
+    
+    static const int MS_PER_TICK = 50;
     
 private:
     struct Snapshot
@@ -47,14 +47,13 @@ private:
         }
     };
     
-    const int millisecondsPerTick = 50;
     const int snapshotInterval = 40;
     const int maxTicksPerFrame = 2;
     int lastTick;
     std::string debugName;
     std::vector<Unit*> units;
-    std::list<Command*> commands;
-    std::list<Command*>::iterator commandIterator;
+    std::vector<Command*> commands;
+    int commandPosition;
     CircularBuffer<Snapshot> snapshots;
     bool rollbackMode;
     float stableMs;
@@ -63,6 +62,7 @@ private:
     int msSamples[stableMsSamples];
     int samplePos = 0;
 
+    void rollback(int toTick);
     void processUnits();
     void runCommands(int tick);
     void takeSnapshot();
