@@ -17,6 +17,7 @@ static int win = 0;
 
 Simulation* simulation1;
 Simulation* simulation2;
+Rendering* rendering;
 
 void Update()
 {
@@ -36,7 +37,7 @@ void Update()
     
     simulation2->update(ms);
     
-    Rendering::render(ms, simulation1, simulation2);
+    rendering->render(ms);
 }
 
 void idle()
@@ -98,6 +99,8 @@ void Init()
     
     simulation1->init();
     simulation2->init();
+    
+    rendering = new Rendering(simulation1, simulation2);
 }
 
 int main(int argc, char **argv)
