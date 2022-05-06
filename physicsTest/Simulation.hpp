@@ -27,6 +27,7 @@ public:
     float getFrameFraction(int ms);
     int getNextCommandTick();
     void addCommand(Command* cmd);
+    Vec getAttackDirection();
     
     static const int MS_PER_TICK = 50;
     

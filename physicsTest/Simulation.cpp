@@ -165,6 +165,25 @@ void Simulation::rollback(int toTick)
     cout << debugName << ": " << "   Command buffer at tick " << commands[commandPosition]->getTick() << endl;
 }
 
+Vec Simulation::getAttackDirection()
+{
+    Unit* u1 = units[0];
+    float x = 1.0f, y = 1.0f;
+    
+    for (int i = 1; i < units.size(); i++)
+    {
+        x += float(units[i]->pos.x - u1->pos.x) / float(Vec::SCALE);
+        y += float(units[i]->pos.y - u1->pos.y) / float(Vec::SCALE);
+    }
+    
+    float len = sqrt(x * x + y * y);
+    x /= len;
+    y /= len;
+    float r = 0.005 + (rand() % 1000) * 0.0025;
+    
+    return Vec(x * r, y * r);
+}
+
 Simulation::~Simulation()
 {
 }

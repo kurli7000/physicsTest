@@ -5,7 +5,8 @@ using namespace std;
 void CommandDispatcher::generateCommand(int currentTick)
 {
     int cmdTick = currentTick + 1000 / Simulation::MS_PER_TICK; // 1 second into future
-    Vec velocity((rand() % 1200) - 600, (rand() % 1200) - 600);
+    Vec velocity = simulation1->getAttackDirection();
+    
     Command* cmd = new Command(0, cmdTick, velocity);
     
     // send command to simulation1 immediately

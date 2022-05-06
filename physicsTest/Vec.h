@@ -8,6 +8,7 @@ public:
     int x, y;
     Vec() {};
     Vec(int xval, int yval) : x(xval), y(yval) {};
+    Vec(float xval, float yval) : x(int(xval * SCALE)), y(int(yval * SCALE)) {};
     ~Vec() {};
     
     static const int SCALE = 1000;
