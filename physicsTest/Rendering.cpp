@@ -5,7 +5,7 @@
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
-#include <GL/glut.h>
+#include "freeglut/include/GL/freeglut.h"
 #include <GL/glu.h>
 #include <GL/gl.h>
 #endif
@@ -58,8 +58,8 @@ void Rendering::drawScene(Simulation* simulation, float offset)
 
 void drawString(float x, float y, string str, void* font = GLUT_BITMAP_9_BY_15)
 {
-    char arr[str.length() + 1];
-    strcpy(arr, str.c_str());
+    char arr[1024];
+    strcpy_s(arr, str.c_str());
     
     glRasterPos3f(x, y, 0);
 

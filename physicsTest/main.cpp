@@ -3,7 +3,7 @@
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
-#include <GL/glut.h>
+#include "freeglut/include/GL/freeglut.h"
 #include <GL/glu.h>
 #include <GL/gl.h>
 #endif

@@ -16,7 +16,7 @@ public:
 
     CircularBuffer(int size)
     {
-        CircularBufferData* tail;
+        CircularBufferData* tail = nullptr;
         
         for (int i = 0; i < size; i++)
         {

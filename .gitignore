@@ -1,0 +1,5 @@
+*.pdb
+*.exe
+physicsTest.vs/physicsTest/physicsTest/x64/Debug/*
+physicsTest.vs/physicsTest/.vs/
+physicsTest.vs/physicsTest/physicsTest/physicsTest.vcxproj.user
