@@ -58,8 +58,13 @@ void Rendering::drawScene(Simulation* simulation, float offset)
 
 void drawString(float x, float y, string str, void* font = GLUT_BITMAP_9_BY_15)
 {
+    // TODO cleanup
     char arr[1024];
+    #ifdef __APPLE__
+    strcpy(arr, str.c_str());
+    #else
     strcpy_s(arr, str.c_str());
+    #endif
     
     glRasterPos3f(x, y, 0);
 

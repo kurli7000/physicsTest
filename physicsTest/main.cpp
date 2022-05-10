@@ -21,7 +21,6 @@ Simulation* simulation2;
 Rendering* rendering;
 CommandDispatcher* dispatcher;
 
-
 void Update()
 {
     static auto startTime = chrono::steady_clock::now();

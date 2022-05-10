@@ -12,6 +12,19 @@ public:
     void execute(std::vector<Unit*>* units);
     int getTick() { return tick; }
     
+    static int* readBytecode(std::string filename);
+    
+    enum Bytecode
+    {
+        PUSH = 1,
+        DUP = 2,
+        SUB = 3,
+        RAND = 4,
+        PROD_UNIT = 5,
+        JUMP_GT = 6,
+        END = 7
+    };
+
 private:
     int unit;
     int tick;

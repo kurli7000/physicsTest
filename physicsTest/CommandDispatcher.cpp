@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 void CommandDispatcher::generateCommand(int currentTick)
 {
     int cmdTick = currentTick + 1000 / Simulation::MS_PER_TICK; // 1 second into future
@@ -47,6 +48,14 @@ void CommandDispatcher::sendCommands(int currentTick)
 void CommandDispatcher::init()
 {
     generateCommand(0);
+
+    auto buffer = Command::readBytecode("random_prod.bytecode");
+    
+    while (*buffer != Command::Bytecode::END)
+    {
+        cout << "bytecode: " << *buffer << endl;
+        buffer++;
+    }
 }
 
 void CommandDispatcher::update(int tick)
