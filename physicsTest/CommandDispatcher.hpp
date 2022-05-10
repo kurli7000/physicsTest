@@ -30,6 +30,8 @@ private:
     void generateCommand(int currentTick);
     void sendCommands(int currentTick);
     
+    int* byteCode;
+    
     int lastCommandTick;
 };
 

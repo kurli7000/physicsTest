@@ -2,25 +2,25 @@
 # DUP: duplicate stack top
 # SUB (a, b) = a - b
 # RAND: rand % a
-# PROD_UNIT (x, y, unit)
-# JUMP_GT: jump if greater than (value1, value2, cmd index)
+# PROD_UNIT (unit, x, y)
+# JUMP_GT: jump to index if value1 > value2 (value1, value2, index)
 
-PUSH 5          # [ i ]
-DUP             # [ i, 5 ]
-PUSH 1          # [ i, 5, 1 ]
-SUB             # [ i, 4 ]
-PUSH 1000       # [ i, 4, 1000 ]
-RAND            # [ i, 4, r1 ]
-PUSH 500        # [ 5, 4, r1, 500 ]
-SUB             # [ 5, 4, r1-500 ]
-PUSH 1000       # [ 5, 4, r1-500, 1000 ]
-RAND            # [ 5, 4, r1-500, r2 ]
-PUSH 500        # [ 5, 4, r1-500, r2, 500 ]
-SUB             # [ 5, 4, r1-500, r2-500 ]
-PROD_UNIT       # [ 5 ]
-PUSH 1          # [ 5, 1 ]
-SUB             # [ 4 ] substract loop index (4)
-DUP             # [ 4, 4 ]
-PUSH 0          # [ 4, 4, 0 ]
-PUSH 2          # [ 4, 4, 0, 2 ]
-JUMP_GT         # [ 4 ]
+PUSH 50         # [ i ]
+DUP             # [ i, i ]
+PUSH 1          # [ i, i, 1 ]
+SUB             # [ i, i-1 ]
+PUSH 1000       # [ i, i-1, 1000 ]
+RAND            # [ i, i-1, r1 ]
+PUSH 500        # [ i, i-1, r1, 500 ]
+SUB             # [ i, i-1, r1-500 ]
+PUSH 1000       # [ i, i-1, r1-500, 1000 ]
+RAND            # [ i, i-1, r1-500, r2 ]
+PUSH 500        # [ i, i-1, r1-500, r2, 500 ]
+SUB             # [ i, i-1, r1-500, r2-500 ]
+PROD_UNIT       # [ i ]
+PUSH 1          # [ i, 1 ]
+SUB             # [ i-1 ]
+DUP             # [ i-1, i-1 ]
+PUSH 0          # [ i-1, i-1, 0 ]
+PUSH 1          # [ i-1, i-1, 0, 1 ]
+JUMP_GT         # [ i-1 ]

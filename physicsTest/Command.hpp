@@ -8,7 +8,7 @@
 class Command
 {
 public:
-    Command(int unit, int tick, Vec velocityIncrease);
+    Command(int tick, int* bCode);
     void execute(std::vector<Unit*>* units);
     int getTick() { return tick; }
     
@@ -26,9 +26,15 @@ public:
     };
 
 private:
-    int unit;
+    void push(int value);
+    int pop();
+    int peek();
+    
     int tick;
-    Vec velocity;
+    int* byteCode;
+    static const int MAX_STACK = 32;
+    int stackSize;
+    int stack[MAX_STACK];
 };
 
 #endif /* Command_hpp */

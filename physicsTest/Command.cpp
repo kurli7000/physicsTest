@@ -5,11 +5,84 @@
 
 using namespace std;
 
-Command::Command(int unit, int tick, Vec velocityIncrease) :
-    unit(unit),
+Command::Command(int tick, int* bCode) :
     tick(tick),
-    velocity(velocityIncrease)
+    stackSize(0),
+    byteCode(bCode)
 {}
+
+void Command::execute(vector<Unit*>* units)
+{
+    srand(getTick());
+    
+    int* head = byteCode;
+    while (*head != Command::Bytecode::END)
+    {
+        Bytecode command = (Bytecode)*head;
+        
+        switch (command) {
+            case Bytecode::PUSH:
+                head++;
+                push(*head);
+                break;
+            case Bytecode::DUP:
+                push(peek());
+                break;
+            case Bytecode::SUB:
+                {
+                    int value2 = pop();
+                    int value1 = pop();
+                    push(value1 - value2);
+                }
+                break;
+            case Bytecode::RAND:
+                push(rand() % pop());
+                break;
+            case Bytecode::PROD_UNIT:
+                {
+                    int value3 = pop();
+                    int value2 = pop();
+                    int value1 = pop();
+                    Unit* u = (*units)[value1];
+                    u->increaseVelocity(Vec(value2, value3));
+                }
+                break;
+            case Bytecode::JUMP_GT:
+                {
+                    int index = pop();
+                    int value2 = pop();
+                    int value1 = pop();
+                    if (value1 > value2)
+                    {
+                        head = &byteCode[index];
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        head++;
+    }
+}
+
+void Command::push(int value)
+{
+    assert(stackSize < MAX_STACK);
+    stack[stackSize++] = value;
+}
+
+int Command::pop()
+{
+    assert(stackSize > 0);
+    return stack[--stackSize];
+}
+
+int Command::peek()
+{
+    assert(stackSize > 0);
+    return stack[stackSize - 1];
+}
+
 
 int* Command::readBytecode(string filename)
 {
@@ -47,15 +120,15 @@ int* Command::readBytecode(string filename)
             {
                 buffer.push_back(Bytecode::SUB);
             }
-            else if (cmd == "SUB")
+            else if (cmd == "RAND")
             {
                 buffer.push_back(Bytecode::RAND);
             }
-            else if (cmd == "SUB")
+            else if (cmd == "PROD_UNIT")
             {
                 buffer.push_back(Bytecode::PROD_UNIT);
             }
-            else if (cmd == "SUB")
+            else if (cmd == "JUMP_GT")
             {
                 buffer.push_back(Bytecode::JUMP_GT);
             }
@@ -72,10 +145,4 @@ int* Command::readBytecode(string filename)
     buffer.clear();
     
     return byteCode;
-}
-
-void Command::execute(vector<Unit*>* units)
-{
-    Unit* u = (*units)[unit];
-    u->increaseVelocity(velocity);
 }

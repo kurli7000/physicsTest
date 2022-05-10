@@ -8,7 +8,7 @@ void CommandDispatcher::generateCommand(int currentTick)
     int cmdTick = currentTick + 1000 / Simulation::MS_PER_TICK; // 1 second into future
     Vec velocity = simulation1->getAttackDirection();
     
-    Command* cmd = new Command(0, cmdTick, velocity);
+    Command* cmd = new Command(cmdTick, byteCode);
     
     // send command to simulation1 immediately
     commands1.push_back(CommandToSend(cmd, currentTick));
@@ -47,15 +47,8 @@ void CommandDispatcher::sendCommands(int currentTick)
 
 void CommandDispatcher::init()
 {
+    byteCode = Command::readBytecode("random_prod.bytecode");
     generateCommand(0);
-
-    auto buffer = Command::readBytecode("random_prod.bytecode");
-    
-    while (*buffer != Command::Bytecode::END)
-    {
-        cout << "bytecode: " << *buffer << endl;
-        buffer++;
-    }
 }
 
 void CommandDispatcher::update(int tick)
